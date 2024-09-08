@@ -1,4 +1,4 @@
-package com.carter.pharmacy.boots.model;
+package com.carter.phargate.pharmacy.boots.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

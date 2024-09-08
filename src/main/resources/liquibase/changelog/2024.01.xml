@@ -1,0 +1,38 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="2024.01-1" author="jamescarter2001">
+
+        <createTable tableName="pg_pharmacy_chains">
+            <column name="pharmacy_chain_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(100)" />
+        </createTable>
+
+        <createTable tableName="pg_pharmacies">
+            <column name="pharmacy_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="pharmacy_chain_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="source_id" type="bigint">
+                <constraints unique="true" nullable="false" />
+            </column>
+            <column name="address_line_1" type="varchar(100)" />
+            <column name="town" type="varchar(100)" />
+            <column name="county" type="varchar(50)" />
+            <column name="postcode" type="varchar(8)" />
+            <column name="phone_number" type="varchar(20)" />
+        </createTable>
+        
+        <addForeignKeyConstraint baseTableName="pg_pharmacies"
+                                 baseColumnNames="pharmacy_chain_id"
+                                 constraintName="fk_pharmacy_chains_pharmacies"
+                                 referencedTableName="pg_pharmacy_chains"
+                                 referencedColumnNames="pharmacy_chain_id"
+        />
+
+    </changeSet>
+
+</databaseChangeLog>
