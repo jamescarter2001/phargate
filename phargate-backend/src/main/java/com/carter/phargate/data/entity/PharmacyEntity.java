@@ -3,6 +3,7 @@ package com.carter.phargate.data.entity;
 import com.carter.phargate.pharmacy.model.Pharmacy;
 import com.carter.phargate.pharmacy.model.PharmacyChainId;
 import com.carter.phargate.pharmacy.model.PharmacyId;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class PharmacyEntity {
     private long pharmacyId;
     private long pharmacyChainId;
     private long sourceId;
+    @Column(name = "address_line_1")
     private String addressLine1;
     private String town;
     private String county;
