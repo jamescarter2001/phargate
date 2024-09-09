@@ -2,6 +2,8 @@ package com.carter.phargate;
 
 import com.carter.phargate.data.jdbi.PhargateJdbiModule;
 import com.carter.phargate.data.liquibase.LiquibaseService;
+import com.carter.phargate.data.repo.PharmacyRepository;
+import com.carter.phargate.pharmacy.model.Pharmacy;
 import com.carter.phargate.util.http.RestClientFactory;
 import com.carter.phargate.data.source.PharmacyChainDataSource;
 import com.carter.phargate.pharmacy.PharmacyClient;
@@ -14,6 +16,7 @@ import org.jdbi.v3.core.Jdbi;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.function.Function;
 
 public class Application {
@@ -37,6 +40,9 @@ public class Application {
         // RestClient restClient = RestClientFactory.newRateLimitedClient(5, Duration.ofMinutes(1), true);
         // PharmacyClient bootsPharmacyClient = new BootsPharmacyClient(restClient, pharmacyChainByPharmacyType);
         // bootsPharmacyClient.getPharmacies();
+
+        PharmacyRepository pharmacyRepository = new PharmacyRepository(jdbi);
+        List<Pharmacy> pharmacyList = pharmacyRepository.getPharmacies();
 
         var app = Javalin.create(/*config*/)
                 .get("/", ctx -> ctx.result("Hello World"))

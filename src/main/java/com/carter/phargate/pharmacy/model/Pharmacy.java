@@ -1,6 +1,7 @@
 package com.carter.phargate.pharmacy.model;
 
 import lombok.Builder;
+import org.jmolecules.ddd.types.AggregateRoot;
 
 @Builder
 public record Pharmacy(
@@ -12,4 +13,9 @@ public record Pharmacy(
         String county,
         String postcode,
         String phoneNumber
-) {}
+) implements AggregateRoot<Pharmacy, PharmacyId> {
+    @Override
+    public PharmacyId getId() {
+        return pharmacyId;
+    }
+}

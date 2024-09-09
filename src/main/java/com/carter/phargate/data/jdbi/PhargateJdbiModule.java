@@ -17,8 +17,8 @@ public class PhargateJdbiModule {
     public static void registerModules(Jdbi jdbi) {
         jdbi.registerCodecFactory(
                 CodecFactory.builder()
+                        .addCodec(PharmacyChainId.class, new PharmacyChainIdCodec())
                         .addCodec(PharmacyId.class, new PharmacyIdCodec())
-                        .addCodec(PharmacyChainIdCodec.class, new PharmacyChainIdCodec())
                         .build()
         );
     }

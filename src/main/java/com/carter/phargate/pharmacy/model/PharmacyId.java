@@ -1,4 +1,6 @@
 package com.carter.phargate.pharmacy.model;
 
-public record PharmacyId(long id) {
+import org.jmolecules.ddd.types.Identifier;
+
+public record PharmacyId(long id) implements Identifier {
 }
