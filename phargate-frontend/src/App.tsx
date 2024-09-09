@@ -8,7 +8,7 @@ const App = () => {
   const [postcode, setPostcode] = useState("");
   const [medication, setMedication] = useState("");
   const [filteredPharmacies, setFilteredPharmacies] = useState<any[]>([]);
-  const [sortType, setSortType] = useState<"distance" | "stock" | null>(null); // Added a simple state for sorting
+  const [sortType, setSortType] = useState<"distance" | "stock" | null>(null);
 
   const { data: pharmacies, loading } = usePharmacyData(postcode, medication);
 
@@ -29,7 +29,7 @@ const App = () => {
         ),
       );
     } else {
-      setFilteredPharmacies(pharmacies); // Default, no sorting
+      setFilteredPharmacies(pharmacies);
     }
   }, [pharmacies, sortType]);
 
