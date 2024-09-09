@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="99c9c1ca-0daf-444a-93f9-df8448dfc0e2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/Application.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/data/jdbi/PhargateJdbiModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/data/liquibase/LiquibaseService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/data/repo/PharmacyRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/data/source/PharmacyChainDataSource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/PharmacyClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/PharmacyClientFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/boots/BootsPharmacyClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/boots/model/BootsPharmacy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/boots/model/BootsPharmacyAddress.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/boots/model/BootsPharmacyContactDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/boots/model/BootsPharmacyGridLocation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/boots/model/BootsPharmacyLocation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/boots/model/BootsPharmacySearchResult.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/model/Pharmacy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/model/PharmacyChain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/model/PharmacyChainId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/model/PharmacyId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/pharmacy/model/PharmacyType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/util/http/OkHttpRestClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/util/http/RateLimitInterceptor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/util/http/RestClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/carter/phargate/util/http/RestClientFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/liquibase/changelog/2024.01.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/liquibase/master.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2lqeuofXQAfjwPPyx1af6TUfo62" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-temurin-17.0.10-4caba194b151-b3785831" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="99c9c1ca-0daf-444a-93f9-df8448dfc0e2" name="Changes" comment="" />
+      <created>1725912259943</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1725912259943</updated>
+      <workItem from="1725912264130" duration="7000" />
+    </task>
+    <servers />
+  </component>
+</project>
