@@ -22,7 +22,7 @@
             <column name="address_line_1" type="varchar(100)" />
             <column name="town" type="varchar(100)" />
             <column name="county" type="varchar(50)" />
-            <column name="postcode" type="varchar(8)" />
+            <column name="postcode" type="varchar(15)" />
             <column name="phone_number" type="varchar(20)" />
         </createTable>
         
@@ -33,6 +33,12 @@
                                  referencedColumnNames="pharmacy_chain_id"
         />
 
+    </changeSet>
+
+    <changeSet id="2024.01-2" author="jamescarter2001">
+        <addColumn tableName="pg_pharmacy_chains">
+            <column name="api_url" type="varchar(2048)" />
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

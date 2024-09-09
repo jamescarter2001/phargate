@@ -35,6 +35,7 @@ public class BootsPharmacyClient implements PharmacyClient {
 
             total = response.total();
 
+            log.info("Loading pharmacies - Progress: ({}/{})", offset + 10, total);
             List<BootsPharmacy> pharmacies = response.pharmacies();
 
             if (pharmacies != null && !pharmacies.isEmpty()) {
@@ -44,17 +45,12 @@ public class BootsPharmacyClient implements PharmacyClient {
                         .toList()
                 );
                 offset = offset + 10;
-                try {
-                    // Sleep to avoid hitting the Boots API rate limit (10 requests per min).
-                    Thread.sleep(6000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
             }
         }
         if (total != result.size()) {
             log.warn("Result size does not match expected API size! {} != {}", result.size(), total);
         }
+        log.info("Loaded {} pharmacies", result.size());
         return result;
     }
 }
