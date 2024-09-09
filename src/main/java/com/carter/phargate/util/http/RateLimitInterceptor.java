@@ -19,32 +19,40 @@ public class RateLimitInterceptor implements Interceptor {
 
     private final long maxRequests;
     private final Duration rateLimit;
+    private final boolean allowBlocking;
     private long lastRequestTime = 0;
     private long requestCount = 0;
 
     @NotNull
     @Override
     public synchronized Response intercept(@NotNull Chain chain) throws IOException {
-        long currentTime = System.currentTimeMillis();
-        long timeSinceLastRequest = currentTime - lastRequestTime;
+        final long currentTime = System.currentTimeMillis();
+        final long timeSinceLastRequest = currentTime - lastRequestTime;
 
-        long rateLimitTime = rateLimit.toMillis();
+        final long rateLimitTime = rateLimit.toMillis();
 
         // Has the rate limit time elapsed? If so, we can safely reset the counter.
         if (timeSinceLastRequest >= rateLimitTime) {
             requestCount = 0;
         }
 
-        // Have we hit the rate limit? If so, suspend the thread.
-        // TODO: should thread suspension be forced at this level? Should clients handle a thrown exception instead?
+        // Have we hit the rate limit?
         if (requestCount == maxRequests && timeSinceLastRequest < rateLimitTime) {
-            long suspendTime = rateLimitTime - timeSinceLastRequest;
-            log.info("[{}] Rate limit reached: {} requests per {} seconds. Suspending thread for {} seconds", chain.request().url(), maxRequests, rateLimit.getSeconds(), suspendTime / 1000);
-            try {
-                Thread.sleep(suspendTime);
+            final String message = String.format("[%s] Rate limit reached: %d requests per %d seconds.", chain.request().url(), maxRequests, rateLimit.getSeconds());
+
+            // Can we block the thread until the rate limit time has elapsed?
+            if (allowBlocking) {
+                long suspendTime = rateLimitTime - timeSinceLastRequest;
+                try {
+                    log.info(message + " Suspending thread for {} seconds", suspendTime / 1000);
+                    Thread.sleep(suspendTime);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 requestCount = 0;
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            } else {
+                log.error(message);
+                throw new IOException(message);
             }
         }
 

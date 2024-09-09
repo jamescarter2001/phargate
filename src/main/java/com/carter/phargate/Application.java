@@ -34,7 +34,7 @@ public class Application {
 
         Function<PharmacyType, PharmacyChain> pharmacyChainByPharmacyType = pharmacyChainDataSource.getPharmacyChainByPharmacyTypeMapper();
 
-        RestClient restClient = RestClientFactory.newRateLimitedClient(5, Duration.ofMinutes(1));
+        RestClient restClient = RestClientFactory.newRateLimitedClient(5, Duration.ofMinutes(1), true);
         PharmacyClient bootsPharmacyClient = new BootsPharmacyClient(restClient, pharmacyChainByPharmacyType);
         bootsPharmacyClient.getPharmacies();
 

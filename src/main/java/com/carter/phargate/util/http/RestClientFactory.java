@@ -13,7 +13,11 @@ public class RestClientFactory {
     }
 
     public static RestClient newRateLimitedClient(long maxRequests, Duration timeFrame) {
-        return new OkHttpRestClient(ImmutableList.of(new RateLimitInterceptor(maxRequests, timeFrame)));
+        return newRateLimitedClient(maxRequests, timeFrame, false);
+    }
+
+    public static RestClient newRateLimitedClient(long maxRequests, Duration timeFrame, boolean allowBlocking) {
+        return new OkHttpRestClient(ImmutableList.of(new RateLimitInterceptor(maxRequests, timeFrame, allowBlocking)));
     }
 
 }
