@@ -36,9 +36,65 @@
     </changeSet>
 
     <changeSet id="2024.01-2" author="jamescarter2001">
+
         <addColumn tableName="pg_pharmacy_chains">
             <column name="api_url" type="varchar(2048)" />
         </addColumn>
+
+    </changeSet>
+
+    <changeSet id="2024.01-3" author="jamescarter2001">
+
+        <createTable tableName="pg_medicine_types">
+            <column name="medicine_type_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar(200)" />
+        </createTable>
+
+        <createTable tableName="pg_medicines">
+            <column name="medicine_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="medicine_type_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="name" type="varchar(200)" />
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="pg_medicines"
+                                 baseColumnNames="medicine_type_id"
+                                 constraintName="fk_medicines_medicine_types"
+                                 referencedTableName="pg_medicine_types"
+                                 referencedColumnNames="medicine_type_id"
+        />
+
+        <createTable tableName="pg_medicine_source_ids">
+            <column name="medicine_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="pharmacy_chain_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="source_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="pg_medicine_source_ids"
+                                 baseColumnNames="medicine_id"
+                                 constraintName="fk_medicine_source_ids_medicines"
+                                 referencedTableName="pg_medicines"
+                                 referencedColumnNames="medicine_id"
+        />
+
+        <addForeignKeyConstraint baseTableName="pg_medicine_source_ids"
+                                 baseColumnNames="pharmacy_chain_id"
+                                 constraintName="fk_medicine_source_ids_pharmacy_chains"
+                                 referencedTableName="pg_pharmacy_chains"
+                                 referencedColumnNames="pharmacy_chain_id"
+        />
+
     </changeSet>
 
 </databaseChangeLog>

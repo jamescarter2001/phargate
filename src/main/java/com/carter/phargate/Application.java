@@ -34,9 +34,9 @@ public class Application {
 
         Function<PharmacyType, PharmacyChain> pharmacyChainByPharmacyType = pharmacyChainDataSource.getPharmacyChainByPharmacyTypeMapper();
 
-        RestClient restClient = RestClientFactory.newRateLimitedClient(5, Duration.ofMinutes(1), true);
-        PharmacyClient bootsPharmacyClient = new BootsPharmacyClient(restClient, pharmacyChainByPharmacyType);
-        bootsPharmacyClient.getPharmacies();
+        // RestClient restClient = RestClientFactory.newRateLimitedClient(5, Duration.ofMinutes(1), true);
+        // PharmacyClient bootsPharmacyClient = new BootsPharmacyClient(restClient, pharmacyChainByPharmacyType);
+        // bootsPharmacyClient.getPharmacies();
 
         var app = Javalin.create(/*config*/)
                 .get("/", ctx -> ctx.result("Hello World"))
