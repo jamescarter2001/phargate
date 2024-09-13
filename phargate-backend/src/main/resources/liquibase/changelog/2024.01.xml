@@ -7,17 +7,15 @@
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="name" type="varchar(100)" />
+            <column name="api_url" type="varchar(2048)" />
         </createTable>
 
         <createTable tableName="pg_pharmacies">
-            <column name="pharmacy_id" type="bigint" autoIncrement="true">
+            <column name="pharmacy_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="pharmacy_chain_id" type="bigint">
-                <constraints nullable="false" />
-            </column>
-            <column name="source_id" type="bigint">
-                <constraints unique="true" nullable="false" />
+                <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="address_line_1" type="varchar(100)" />
             <column name="town" type="varchar(100)" />
@@ -32,14 +30,6 @@
                                  referencedTableName="pg_pharmacy_chains"
                                  referencedColumnNames="pharmacy_chain_id"
         />
-
-    </changeSet>
-
-    <changeSet id="2024.01-2" author="jamescarter2001">
-
-        <addColumn tableName="pg_pharmacy_chains">
-            <column name="api_url" type="varchar(2048)" />
-        </addColumn>
 
     </changeSet>
 

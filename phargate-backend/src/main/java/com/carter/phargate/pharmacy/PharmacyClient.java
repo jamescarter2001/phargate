@@ -1,6 +1,6 @@
 package com.carter.phargate.pharmacy;
 
-import com.carter.phargate.pharmacy.model.Pharmacy;
+import com.carter.phargate.model.Pharmacy;
 
 import java.util.List;
 

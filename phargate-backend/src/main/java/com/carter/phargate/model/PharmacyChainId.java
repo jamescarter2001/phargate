@@ -1,4 +1,4 @@
-package com.carter.phargate.pharmacy.model;
+package com.carter.phargate.model;
 
 public record PharmacyChainId(long id) {
 }

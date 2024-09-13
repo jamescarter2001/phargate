@@ -1,9 +1,9 @@
 package com.carter.phargate.pharmacy.boots.model;
 
-import com.carter.phargate.pharmacy.model.PharmacyId;
-import com.carter.phargate.pharmacy.model.Pharmacy;
-import com.carter.phargate.pharmacy.model.PharmacyChain;
-import com.carter.phargate.pharmacy.model.PharmacyType;
+import com.carter.phargate.model.PharmacyId;
+import com.carter.phargate.model.Pharmacy;
+import com.carter.phargate.model.PharmacyChain;
+import com.carter.phargate.model.PharmacyType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,7 +19,6 @@ public record BootsPharmacy (
         return Pharmacy.builder()
                 .pharmacyId(new PharmacyId(location.id()))
                 .pharmacyChainId(pharmacyChainIdByPharmacyType.apply(PharmacyType.BOOTS).pharmacyChainId())
-                .sourceId(location.id())
                 .addressLine1(location.address().street())
                 .town(location.address().town())
                 .county(location.address().county())

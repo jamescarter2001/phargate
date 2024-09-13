@@ -2,20 +2,22 @@ package com.carter.phargate.pharmacy.boots;
 
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacy;
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacySearchResult;
-import com.carter.phargate.pharmacy.model.PharmacyChain;
-import com.carter.phargate.pharmacy.model.PharmacyType;
-import com.carter.phargate.pharmacy.model.Pharmacy;
+import com.carter.phargate.model.PharmacyChain;
+import com.carter.phargate.model.PharmacyType;
+import com.carter.phargate.model.Pharmacy;
 import com.carter.phargate.pharmacy.PharmacyClient;
 import com.carter.phargate.util.http.RestClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-@RequiredArgsConstructor
+@Component
 @Slf4j
+@RequiredArgsConstructor
 public class BootsPharmacyClient implements PharmacyClient {
 
     private final RestClient restClient;

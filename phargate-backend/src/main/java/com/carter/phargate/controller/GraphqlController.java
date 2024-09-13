@@ -1,7 +1,7 @@
 package com.carter.phargate.controller;
 
 import com.carter.phargate.data.source.PharmacyDataSource;
-import com.carter.phargate.pharmacy.model.Pharmacy;
+import com.carter.phargate.model.Pharmacy;
 import lombok.AllArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;

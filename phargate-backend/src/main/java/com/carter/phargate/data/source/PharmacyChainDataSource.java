@@ -1,13 +1,14 @@
 package com.carter.phargate.data.source;
 
-import com.carter.phargate.pharmacy.model.PharmacyChain;
-import com.carter.phargate.pharmacy.model.PharmacyType;
-import lombok.experimental.UtilityClass;
+import com.carter.phargate.model.PharmacyChain;
+import com.carter.phargate.model.PharmacyType;
+import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Function;
 
+@Component
 public class PharmacyChainDataSource {
 
     private static final Map<PharmacyType, PharmacyChain> pharmacyChainByPharmacyTypeMap = new EnumMap<>(PharmacyType.class);
