@@ -23,10 +23,10 @@ public class AppConfig {
         return RestClientFactory.newRateLimitedClient(5, Duration.ofMinutes(1), true);
     }
 
-    @Bean("bootsPharmacyClient")
-    public PharmacyClient bootsPharmacyClient(RestClient rateLimitedRestClient, PharmacyChainDataSource pharmacyChainDataSource) {
-        return new BootsPharmacyClient(rateLimitedRestClient, pharmacyChainDataSource.getPharmacyChainByPharmacyTypeMapper());
-    }
+    // @Bean("bootsPharmacyClient")
+    // public PharmacyClient bootsPharmacyClient(RestClient rateLimitedRestClient, PharmacyChainDataSource pharmacyChainDataSource) {
+    //     return new BootsPharmacyClient(rateLimitedRestClient, pharmacyChainDataSource.getPharmacyChainByPharmacyTypeMapper());
+    // }
 
     @Bean("bootsPharmacyLocalClient")
     public PharmacyClient bootsPharmacyLocalClient() {
