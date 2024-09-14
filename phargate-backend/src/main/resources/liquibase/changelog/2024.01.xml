@@ -87,4 +87,33 @@
 
     </changeSet>
 
+    <changeSet id="2024.01-2" author="jamescarter2001">
+        
+        <createTable tableName="pg_medicine_stock">
+            <column name="medicine_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="pharmacy_chain_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="level" type="varchar(10)" />
+            <column name="numerical_level" type="int" />
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="pg_medicine_stock"
+                                 baseColumnNames="medicine_id"
+                                 constraintName="fk_medicine_stock_medicines"
+                                 referencedTableName="pg_medicines"
+                                 referencedColumnNames="medicine_id"
+        />
+
+        <addForeignKeyConstraint baseTableName="pg_medicine_stock"
+                                 baseColumnNames="pharmacy_chain_id"
+                                 constraintName="fk_medicine_stock_pharmacy_chains"
+                                 referencedTableName="pg_pharmacy_chains"
+                                 referencedColumnNames="pharmacy_chain_id"
+        />
+        
+    </changeSet>
+
 </databaseChangeLog>

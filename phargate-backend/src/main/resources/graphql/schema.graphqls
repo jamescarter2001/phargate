@@ -2,13 +2,12 @@ scalar PharmacyID
 scalar PharmacyChainID
 
 type Query {
-    pharmacies(first: Int): [Pharmacy]
+    pharmacies(first: Int = 25): [Pharmacy]
 }
 
 type Pharmacy {
     id: PharmacyID!
     chainId: PharmacyChainID!
-    sourceId: Int
     addressLine1: String
     town: String
     county: String

@@ -1,4 +1,4 @@
-package com.carter.phargate.util.http;
+package com.carter.phargate.util;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

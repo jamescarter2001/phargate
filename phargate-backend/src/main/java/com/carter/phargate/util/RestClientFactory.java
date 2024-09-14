@@ -1,4 +1,4 @@
-package com.carter.phargate.util.http;
+package com.carter.phargate.util;
 
 import com.google.common.collect.ImmutableList;
 import lombok.experimental.UtilityClass;

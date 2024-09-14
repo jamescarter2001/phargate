@@ -1,4 +1,4 @@
-package com.carter.phargate.util.http;
+package com.carter.phargate.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

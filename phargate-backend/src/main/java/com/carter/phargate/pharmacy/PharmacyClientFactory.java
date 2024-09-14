@@ -3,7 +3,7 @@ package com.carter.phargate.pharmacy;
 import com.carter.phargate.pharmacy.boots.BootsPharmacyClient;
 import com.carter.phargate.model.PharmacyChain;
 import com.carter.phargate.model.PharmacyType;
-import com.carter.phargate.util.http.RestClientFactory;
+import com.carter.phargate.util.RestClientFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.util.function.Function;
