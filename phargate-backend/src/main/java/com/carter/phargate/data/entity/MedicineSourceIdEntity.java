@@ -1,6 +1,6 @@
 package com.carter.phargate.data.entity;
 
-import com.carter.phargate.data.entity.id.MedicinePharmacyChainId;
+import com.carter.phargate.data.entity.id.MedicineSourceIdEntityId;
 import com.carter.phargate.model.MedicineId;
 import com.carter.phargate.model.MedicineSourceId;
 import com.carter.phargate.model.PharmacyChainId;
@@ -14,17 +14,17 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "pg_medicine_source_ids")
-@IdClass(MedicinePharmacyChainId.class)
+@IdClass(MedicineSourceIdEntityId.class)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class MedicineSourceIdEntity {
 
     @Id
-    private long medicineId;
+    private Long medicineId;
     @Id
     private PharmacyChainId pharmacyChainId;
-    private long sourceId;
+    private Long sourceId;
 
     public MedicineSourceId toMedicineSourceId() {
         return MedicineSourceId.builder()

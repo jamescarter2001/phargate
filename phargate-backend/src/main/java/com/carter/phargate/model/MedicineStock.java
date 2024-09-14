@@ -8,6 +8,6 @@ import javax.annotation.Nullable;
 public record MedicineStock(
         MedicineId medicineId,
         PharmacyId pharmacyId,
-        @Nullable Integer numericalLevel,
+        Integer numericalLevel,
         MedicineStockLevel level
 ) {}

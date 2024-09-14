@@ -2,17 +2,19 @@ package com.carter.phargate.pharmacy.boots.mapper;
 
 import com.carter.phargate.model.MedicineStockLevel;
 import lombok.experimental.UtilityClass;
+import org.springframework.stereotype.Component;
 
-@UtilityClass
-public class MedicineStockLevelByBootsStockLevelMapper {
+import java.util.function.Function;
 
-    public static MedicineStockLevel map(String value) {
-        return switch (value) {
+@Component
+public class MedicineStockLevelByBootsStockLevelMapper implements Function<String, MedicineStockLevel> {
+    @Override
+    public MedicineStockLevel apply(String s) {
+        return switch (s) {
             case "R" -> MedicineStockLevel.RED;
             case "A" -> MedicineStockLevel.AMBER;
             case "G" -> MedicineStockLevel.GREEN;
             default -> MedicineStockLevel.UNKNOWN;
         };
     }
-
 }

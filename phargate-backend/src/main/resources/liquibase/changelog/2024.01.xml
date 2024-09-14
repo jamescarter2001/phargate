@@ -11,11 +11,11 @@
         </createTable>
 
         <createTable tableName="pg_pharmacies">
-            <column name="pharmacy_id" type="bigint">
+            <column name="pharmacy_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="pharmacy_chain_id" type="bigint">
-                <constraints primaryKey="true" nullable="false" />
+                <constraints nullable="false" />
             </column>
             <column name="source_id" type="bigint">
                 <constraints nullable="false" />
@@ -117,6 +117,12 @@
                                  referencedColumnNames="pharmacy_id"
         />
         
+    </changeSet>
+
+    <changeSet id="2024.01-4" author="jamescarter2001">
+        <addColumn tableName="pg_medicine_stock">
+            <column name="last_updated_at" type="datetime" />
+        </addColumn>
     </changeSet>
 
 </databaseChangeLog>

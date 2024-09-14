@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class MedicineEntity {
 
     @Id
-    private long medicineId;
+    private Long medicineId;
     private String name;
 
     public Medicine toMedicine() {

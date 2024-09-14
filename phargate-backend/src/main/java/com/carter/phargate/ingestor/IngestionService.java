@@ -1,7 +1,6 @@
 package com.carter.phargate.ingestor;
 
-@FunctionalInterface
-public interface Ingestor {
+public interface IngestionService {
 
     void ingestPharmacies();
     void ingestMedicineStock();

@@ -6,6 +6,7 @@ import com.carter.phargate.data.repo.MedicineRepository;
 import com.carter.phargate.data.repo.MedicineSourceIdRepository;
 import com.carter.phargate.model.Medicine;
 import com.carter.phargate.model.MedicineId;
+import com.carter.phargate.model.MedicineSourceId;
 import com.carter.phargate.model.PharmacyChainId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,9 +26,9 @@ public class MedicineDataSource {
                 .map(MedicineEntity::toMedicine);
     }
 
-    public List<Long> getSourceIdsByPharmacyChainId(PharmacyChainId pharmacyChainId) {
-        return medicineSourceIdRepository.findAllByPharmacyChainId(pharmacyChainId)
-                .stream().map(MedicineSourceIdEntity::getSourceId)
+    public List<MedicineSourceId> getSourceIdsByPharmacyChainId(PharmacyChainId pharmacyChainId) {
+        return medicineSourceIdRepository.findAllByPharmacyChainId(pharmacyChainId).stream()
+                .map(MedicineSourceIdEntity::toMedicineSourceId)
                 .toList();
     }
 

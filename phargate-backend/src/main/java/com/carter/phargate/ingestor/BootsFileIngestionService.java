@@ -1,42 +1,45 @@
-package com.carter.phargate.pharmacy.boots;
+package com.carter.phargate.ingestor;
 
-import com.carter.phargate.model.MedicineId;
-import com.carter.phargate.model.MedicineStock;
+import com.carter.phargate.data.source.PharmacyDataSource;
 import com.carter.phargate.model.Pharmacy;
-import com.carter.phargate.model.PharmacyId;
-import com.carter.phargate.pharmacy.PharmacyClient;
+import com.carter.phargate.pharmacy.boots.BootsPharmacyClient;
 import com.carter.phargate.util.FilesX;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * File-based client for importing Boots pharmacy data, serving as a workaround
  * for the strict rate limit of the Boots API.
  */
+@Component
+@RequiredArgsConstructor
 @Slf4j
-public class BootsPharmacyFileClient implements PharmacyClient {
+public class BootsFileIngestionService implements IngestionService {
+
+    private final PharmacyDataSource pharmacyDataSource;
+
     @Override
-    public List<Pharmacy> getPharmacies() {
+    public void ingestPharmacies() {
         try {
             File pharmaciesFile = FilesX.fromClassPath("pharmacies.json");
             String data = new String(Files.readAllBytes(pharmaciesFile.toPath()));
-            return new ObjectMapper().readValue(data, new TypeReference<>() {});
+            List<Pharmacy> pharmacies = new ObjectMapper().readValue(data, new TypeReference<>() {});
+            pharmacyDataSource.saveAll(pharmacies);
         } catch (IOException e) {
             log.error(e.getMessage());
         }
-        return Collections.emptyList();
     }
 
     @Override
-    public Map<MedicineId, List<MedicineStock>> getStockByPharmaciesAndMedicines(List<PharmacyId> pharmacyIds, List<Long> medicineSourceIds) {
-        return Collections.emptyMap();
+    public void ingestMedicineStock() {
+
     }
 }

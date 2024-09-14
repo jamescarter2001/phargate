@@ -17,8 +17,8 @@ public record BootsPharmacy (
 
     public Pharmacy toPharmacy() {
         return Pharmacy.builder()
-                .pharmacyId(new PharmacyId(location.id()))
                 .pharmacyChainId(PharmacyChainId.BOOTS)
+                .sourceId(location.id())
                 .addressLine1(location.address().street())
                 .town(location.address().town())
                 .county(location.address().county())

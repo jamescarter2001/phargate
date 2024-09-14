@@ -27,6 +27,13 @@ public class PharmacyDataSource {
         return toPharmacies(pharmacyRepository.findAll());
     }
 
+    public List<Pharmacy> getPharmaciesByTown(String town) {
+        return pharmacyRepository.findAllByTownAndCountyIsNotNull(town, PageRequest.of(0, 25))
+                .stream()
+                .map(PharmacyEntity::asPharmacy)
+                .toList();
+    }
+
     public List<Pharmacy> getByPharmacyChainId(final PharmacyChainId pharmacyChainId) {
         return pharmacyRepository.findAllByPharmacyChainId(pharmacyChainId)
                 .stream()

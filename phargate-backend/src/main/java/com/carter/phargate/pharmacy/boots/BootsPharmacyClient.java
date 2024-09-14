@@ -1,44 +1,35 @@
 package com.carter.phargate.pharmacy.boots;
 
-import com.carter.phargate.model.Medicine;
-import com.carter.phargate.model.MedicineId;
-import com.carter.phargate.model.MedicineStock;
-import com.carter.phargate.model.MedicineStockLevel;
-import com.carter.phargate.model.PharmacyId;
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacy;
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacyItemStockRequest;
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacyItemStockResult;
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacySearchResult;
-import com.carter.phargate.model.PharmacyChainId;
-import com.carter.phargate.model.Pharmacy;
-import com.carter.phargate.pharmacy.PharmacyClient;
+import com.carter.phargate.pharmacy.boots.model.BootsPharmacyStockLevel;
+import com.carter.phargate.util.CollectionsX;
 import com.carter.phargate.util.RestClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicLong;
 
-@Slf4j
+@Component
 @RequiredArgsConstructor
-public class BootsPharmacyClient implements PharmacyClient {
+@Slf4j
+public class BootsPharmacyClient {
 
-    private static final int MEDICINE_BATCH_SIZE = 10;
+    private static final int MEDICINE_BATCH_SIZE = 1;
     private static final int PHARMACY_BATCH_SIZE = 10;
 
     private final RestClient restClient;
 
-    private final Function<String, MedicineStockLevel> medicineStockLevelByBootsStockLevel;
-    private final BiFunction<String, PharmacyChainId, Optional<Medicine>> medicineBySourceIdAndPharmacyType;
+    public List<BootsPharmacy> getPharmacies() {
 
-    public List<Pharmacy> getPharmacies() {
-
-        List<Pharmacy> result = new ArrayList<>();
+        List<BootsPharmacy> result = new ArrayList<>();
 
         int offset = 0;
         int total = -1;
@@ -54,11 +45,7 @@ public class BootsPharmacyClient implements PharmacyClient {
             List<BootsPharmacy> pharmacies = response.pharmacies();
 
             if (pharmacies != null && !pharmacies.isEmpty()) {
-                result.addAll(
-                        pharmacies.stream()
-                        .map(BootsPharmacy::toPharmacy)
-                        .toList()
-                );
+                result.addAll(pharmacies);
                 offset = offset + 10;
             }
         }
@@ -69,30 +56,35 @@ public class BootsPharmacyClient implements PharmacyClient {
         return result;
     }
 
-    public Map<MedicineId, List<MedicineStock>> getStockByPharmacyIdsAndMedicineIds(List<PharmacyId> pharmacyIds, List<Long> medicineIds) {
+    public List<BootsPharmacyStockLevel> getStockLevelsByPharmacyIdsAndMedicineIds(List<Long> pharmacyIds, List<Long> medicineIds) {
 
-        List<MedicineStock> medicineStocks = new ArrayList<>();
+        List<BootsPharmacyStockLevel> medicineStocks = new ArrayList<>();
 
-        for (int i = 0; i < medicineSourceIds.size(); i = i + MEDICINE_BATCH_SIZE) {
+        for (int i = 0; i < medicineIds.size(); i = i + MEDICINE_BATCH_SIZE) {
 
-            List<String> mids = medicineSourceIds.subList(i, MEDICINE_BATCH_SIZE)
+            List<String> mids = CollectionsX.safeSubList(medicineIds, i, i + MEDICINE_BATCH_SIZE)
                     .stream()
                     .map(String::valueOf)
                     .toList();
 
-            for (int j = 0; j < pharmacyIds.size(); j = j + PHARMACY_BATCH_SIZE) {
-                List<Long> pids = pharmacyIds.subList(j, PHARMACY_BATCH_SIZE).stream().map(PharmacyId::id).toList();
-                BootsPharmacyItemStockRequest request = new BootsPharmacyItemStockRequest(mids, pids);
-                BootsPharmacyItemStockResult result = restClient.post("https://www.boots.com/online/psc/itemStock", request, BootsPharmacyItemStockResult.class);
-                medicineStocks.addAll(
-                        result.stockLevels().stream()
-                                .map(ms -> ms.toMedicineStock(medicineBySourceIdAndPharmacyType, medicineStockLevelByBootsStockLevel))
-                                .toList()
-                );
+            for (int fromIndex = 0; fromIndex < pharmacyIds.size(); fromIndex = fromIndex + PHARMACY_BATCH_SIZE) {
+                int toIndex = fromIndex + PHARMACY_BATCH_SIZE;
+                AtomicLong atomicLong = new AtomicLong(0);
+                List<Long> pids = CollectionsX.paddedSubList(pharmacyIds, 10, atomicLong::incrementAndGet, fromIndex, toIndex);
+
+                log.info("Importing Boots pharmacy stock levels: {} - ({}/{})", mids.get(0), fromIndex, pharmacyIds.size());
+                log.info("Importing stock levels for Boots pharmacies: {}", pids);
+
+                try {
+                    BootsPharmacyItemStockRequest request = new BootsPharmacyItemStockRequest(mids, pids);
+                    BootsPharmacyItemStockResult result = restClient.post("https://www.boots.com/online/psc/itemStock", request, BootsPharmacyItemStockResult.class, Map.of("Content-Type", "application/json; charset=utf-8"));
+                    Optional.ofNullable(result.stockLevels()).ifPresent(medicineStocks::addAll);
+                } catch (Exception e) {
+                    log.error("Failed to import stock levels for Boots pharmacies: {}", pids);
+                }
             }
         }
 
-        return medicineStocks.stream()
-                .collect(Collectors.groupingBy(MedicineStock::medicineId));
+        return medicineStocks;
     }
 }

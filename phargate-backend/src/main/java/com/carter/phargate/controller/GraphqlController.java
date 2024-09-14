@@ -28,7 +28,7 @@ public class GraphqlController {
 
     @SchemaMapping
     public long chainId(Pharmacy pharmacy) {
-        return pharmacy.pharmacyChainId().id();
+        return pharmacy.pharmacyChainId().ordinal();
     }
 
 }
