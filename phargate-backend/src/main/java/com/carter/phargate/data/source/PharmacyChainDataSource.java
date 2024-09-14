@@ -1,25 +1,23 @@
 package com.carter.phargate.data.source;
 
 import com.carter.phargate.model.PharmacyChain;
-import com.carter.phargate.model.PharmacyType;
+import com.carter.phargate.model.PharmacyChainId;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.function.Function;
 
 @Component
 public class PharmacyChainDataSource {
 
-    private static final Map<PharmacyType, PharmacyChain> pharmacyChainByPharmacyTypeMap = new EnumMap<>(PharmacyType.class);
+    private static final Map<PharmacyChainId, PharmacyChain> pharmacyChainByPharmacyTypeMap = new EnumMap<>(PharmacyChainId.class);
 
     static {
-        pharmacyChainByPharmacyTypeMap.put(PharmacyType.BOOTS, PharmacyChain.of(1L, "Boots Pharmacy"));
-        pharmacyChainByPharmacyTypeMap.put(PharmacyType.LLOYDS, PharmacyChain.of(2L, "Lloyds Pharmacy"));
+        pharmacyChainByPharmacyTypeMap.put(PharmacyChainId.BOOTS, new PharmacyChain(PharmacyChainId.BOOTS, "Boots Pharmacy"));
     }
 
-    public Function<PharmacyType, PharmacyChain> getPharmacyChainByPharmacyTypeMapper() {
-        return pharmacyChainByPharmacyTypeMap::get;
+    public PharmacyChain getPharmacyChainByPharmacyType(PharmacyChainId pharmacyChainId) {
+        return pharmacyChainByPharmacyTypeMap.get(pharmacyChainId);
     }
 
 }

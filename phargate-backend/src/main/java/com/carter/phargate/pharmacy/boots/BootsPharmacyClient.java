@@ -9,8 +9,7 @@ import com.carter.phargate.pharmacy.boots.model.BootsPharmacy;
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacyItemStockRequest;
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacyItemStockResult;
 import com.carter.phargate.pharmacy.boots.model.BootsPharmacySearchResult;
-import com.carter.phargate.model.PharmacyChain;
-import com.carter.phargate.model.PharmacyType;
+import com.carter.phargate.model.PharmacyChainId;
 import com.carter.phargate.model.Pharmacy;
 import com.carter.phargate.pharmacy.PharmacyClient;
 import com.carter.phargate.util.RestClient;
@@ -20,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -33,9 +33,8 @@ public class BootsPharmacyClient implements PharmacyClient {
 
     private final RestClient restClient;
 
-    private final Function<PharmacyType, PharmacyChain> pharmacyChainIdByPharmacyType;
     private final Function<String, MedicineStockLevel> medicineStockLevelByBootsStockLevel;
-    private final BiFunction<String, PharmacyType, Medicine> medicineBySourceIdAndPharmacyChainId;
+    private final BiFunction<String, PharmacyChainId, Optional<Medicine>> medicineBySourceIdAndPharmacyType;
 
     public List<Pharmacy> getPharmacies() {
 
@@ -57,7 +56,7 @@ public class BootsPharmacyClient implements PharmacyClient {
             if (pharmacies != null && !pharmacies.isEmpty()) {
                 result.addAll(
                         pharmacies.stream()
-                        .map(bp -> bp.toPharmacy(pharmacyChainIdByPharmacyType))
+                        .map(BootsPharmacy::toPharmacy)
                         .toList()
                 );
                 offset = offset + 10;
@@ -70,24 +69,24 @@ public class BootsPharmacyClient implements PharmacyClient {
         return result;
     }
 
-    @Override
-    public Map<MedicineId, List<MedicineStock>> getStockByPharmacyIdsAndMedicineIds(List<Long> pharmacyIds, List<Long> medicineIds) {
+    public Map<MedicineId, List<MedicineStock>> getStockByPharmacyIdsAndMedicineIds(List<PharmacyId> pharmacyIds, List<Long> medicineIds) {
+
         List<MedicineStock> medicineStocks = new ArrayList<>();
 
-        for (int i = 0; i < medicineIds.size(); i = i + MEDICINE_BATCH_SIZE) {
+        for (int i = 0; i < medicineSourceIds.size(); i = i + MEDICINE_BATCH_SIZE) {
 
-            List<String> mids = medicineIds.subList(i, MEDICINE_BATCH_SIZE)
+            List<String> mids = medicineSourceIds.subList(i, MEDICINE_BATCH_SIZE)
                     .stream()
                     .map(String::valueOf)
                     .toList();
 
             for (int j = 0; j < pharmacyIds.size(); j = j + PHARMACY_BATCH_SIZE) {
-                List<Long> pids = pharmacyIds.subList(j, PHARMACY_BATCH_SIZE);
+                List<Long> pids = pharmacyIds.subList(j, PHARMACY_BATCH_SIZE).stream().map(PharmacyId::id).toList();
                 BootsPharmacyItemStockRequest request = new BootsPharmacyItemStockRequest(mids, pids);
                 BootsPharmacyItemStockResult result = restClient.post("https://www.boots.com/online/psc/itemStock", request, BootsPharmacyItemStockResult.class);
                 medicineStocks.addAll(
                         result.stockLevels().stream()
-                                .map(ms -> ms.toMedicineStock(medicineBySourceIdAndPharmacyChainId, pharmacyChainIdByPharmacyType, medicineStockLevelByBootsStockLevel))
+                                .map(ms -> ms.toMedicineStock(medicineBySourceIdAndPharmacyType, medicineStockLevelByBootsStockLevel))
                                 .toList()
                 );
             }

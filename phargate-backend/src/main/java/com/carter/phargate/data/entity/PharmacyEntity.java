@@ -1,10 +1,13 @@
 package com.carter.phargate.data.entity;
 
+import com.carter.phargate.data.entity.id.PharmacyPharmacyChainId;
 import com.carter.phargate.model.Pharmacy;
 import com.carter.phargate.model.PharmacyChainId;
 import com.carter.phargate.model.PharmacyId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
@@ -16,13 +19,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@IdClass(PharmacyEntityId.class)
+@IdClass(PharmacyPharmacyChainId.class)
 @Table(name = "pg_pharmacies")
 public class PharmacyEntity {
     @Id
     private long pharmacyId;
-    @Id
-    private long pharmacyChainId;
+    @Enumerated(EnumType.ORDINAL)
+    private PharmacyChainId pharmacyChainId;
+    private long sourceId;
     @Column(name = "address_line_1")
     private String addressLine1;
     private String town;
@@ -44,8 +48,7 @@ public class PharmacyEntity {
 
     public Pharmacy asPharmacy() {
         return Pharmacy.builder()
-                .pharmacyId(new PharmacyId(pharmacyId))
-                .pharmacyChainId(new PharmacyChainId(pharmacyChainId))
+                .pharmacyId(new PharmacyId(pharmacyId, pharmacyChainId))
                 .addressLine1(addressLine1)
                 .town(town)
                 .county(county)

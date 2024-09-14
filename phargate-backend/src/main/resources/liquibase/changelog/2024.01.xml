@@ -17,6 +17,9 @@
             <column name="pharmacy_chain_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" />
             </column>
+            <column name="source_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <column name="address_line_1" type="varchar(100)" />
             <column name="town" type="varchar(100)" />
             <column name="county" type="varchar(50)" />
@@ -33,7 +36,7 @@
 
     </changeSet>
 
-    <changeSet id="2024.01-3" author="jamescarter2001">
+    <changeSet id="2024.01-2" author="jamescarter2001">
 
         <createTable tableName="pg_medicine_types">
             <column name="medicine_type_id" type="bigint" autoIncrement="true">
@@ -87,13 +90,13 @@
 
     </changeSet>
 
-    <changeSet id="2024.01-2" author="jamescarter2001">
+    <changeSet id="2024.01-3" author="jamescarter2001">
         
         <createTable tableName="pg_medicine_stock">
             <column name="medicine_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" />
             </column>
-            <column name="pharmacy_chain_id" type="bigint">
+            <column name="pharmacy_id" type="bigint">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="level" type="varchar(10)" />
@@ -108,10 +111,10 @@
         />
 
         <addForeignKeyConstraint baseTableName="pg_medicine_stock"
-                                 baseColumnNames="pharmacy_chain_id"
-                                 constraintName="fk_medicine_stock_pharmacy_chains"
-                                 referencedTableName="pg_pharmacy_chains"
-                                 referencedColumnNames="pharmacy_chain_id"
+                                 baseColumnNames="pharmacy_id"
+                                 constraintName="fk_medicine_stock_pharmacies"
+                                 referencedTableName="pg_pharmacies"
+                                 referencedColumnNames="pharmacy_id"
         />
         
     </changeSet>

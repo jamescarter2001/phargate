@@ -3,8 +3,8 @@ package com.carter.phargate.model;
 import lombok.Builder;
 
 @Builder
-public record Medicine(
+public record MedicineSourceId(
         MedicineId medicineId,
-        MedicineTypeId medicineTypeId,
-        String name
+        PharmacyChainId pharmacyChainId,
+        long sourceId
 ) {}

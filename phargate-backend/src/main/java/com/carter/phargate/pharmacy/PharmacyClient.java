@@ -1,5 +1,6 @@
 package com.carter.phargate.pharmacy;
 
+import com.carter.phargate.model.Medicine;
 import com.carter.phargate.model.MedicineId;
 import com.carter.phargate.model.MedicineStock;
 import com.carter.phargate.model.Pharmacy;
@@ -12,6 +13,6 @@ public interface PharmacyClient {
 
     List<Pharmacy> getPharmacies();
 
-    Map<MedicineId, List<MedicineStock>> getStockByPharmacyIdsAndMedicineIds(List<Long> pharmacyIds, List<Long> medicineIds);
+    Map<MedicineId, List<MedicineStock>> getStockByPharmaciesAndMedicines(List<Pharmacy> pharmacyIds, List<Medicine> medicineIds);
 
 }

@@ -1,14 +1,13 @@
 package com.carter.phargate.pharmacy.boots.model;
 
-import com.carter.phargate.model.Medicine;
+import com.carter.phargate.model.MedicineId;
 import com.carter.phargate.model.MedicineStock;
 import com.carter.phargate.model.MedicineStockLevel;
-import com.carter.phargate.model.PharmacyChain;
-import com.carter.phargate.model.PharmacyType;
+import com.carter.phargate.model.PharmacyId;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.LongFunction;
 
 public record BootsPharmacyStockLevel(
         @JsonProperty("storeId") String storeId,
@@ -17,13 +16,13 @@ public record BootsPharmacyStockLevel(
 ) {
 
     public MedicineStock toMedicineStock(
-            BiFunction<String, PharmacyType, Medicine> medicineBySourceIdAndPharmacyChainId,
-            Function<PharmacyType, PharmacyChain> pharmacyChainByPharmacyType,
+            LongFunction<MedicineId> medicineIdByMedicineSourceId,
+            LongFunction<PharmacyId> pharmacyIdByPharmacySourceId,
             Function<String, MedicineStockLevel> medicineStockLevelByBootsStockLevel
     ) {
         return MedicineStock.builder()
-                .medicineId(medicineBySourceIdAndPharmacyChainId.apply(productId, PharmacyType.BOOTS).medicineId())
-                .pharmacyChainId(pharmacyChainByPharmacyType.apply(PharmacyType.BOOTS).pharmacyChainId())
+                .medicineId(medicineIdByMedicineSourceId.apply(Long.parseLong(productId)))
+                .pharmacyId(pharmacyIdByPharmacySourceId.apply(Long.parseLong(storeId)))
                 .level(medicineStockLevelByBootsStockLevel.apply(stockLevel))
                 .build();
     }

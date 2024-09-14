@@ -1,11 +1,13 @@
 package com.carter.phargate.config;
 
+import com.carter.phargate.data.source.MedicineDataSource;
 import com.carter.phargate.data.source.PharmacyChainDataSource;
 import com.carter.phargate.data.source.PharmacyDataSource;
 import com.carter.phargate.ingestor.PharmacyIngestor;
 import com.carter.phargate.pharmacy.PharmacyClient;
 import com.carter.phargate.pharmacy.boots.BootsPharmacyClient;
 import com.carter.phargate.pharmacy.boots.BootsPharmacyFileClient;
+import com.carter.phargate.pharmacy.boots.mapper.MedicineStockLevelByBootsStockLevelMapper;
 import com.carter.phargate.util.RestClient;
 import com.carter.phargate.util.RestClientFactory;
 import com.google.common.collect.ImmutableList;
@@ -23,10 +25,15 @@ public class AppConfig {
         return RestClientFactory.newRateLimitedClient(5, Duration.ofMinutes(1), true);
     }
 
-    // @Bean("bootsPharmacyClient")
-    // public PharmacyClient bootsPharmacyClient(RestClient rateLimitedRestClient, PharmacyChainDataSource pharmacyChainDataSource) {
-    //     return new BootsPharmacyClient(rateLimitedRestClient, pharmacyChainDataSource.getPharmacyChainByPharmacyTypeMapper());
-    // }
+     @Bean("bootsPharmacyClient")
+     public PharmacyClient bootsPharmacyClient(RestClient rateLimitedRestClient, PharmacyChainDataSource pharmacyChainDataSource, MedicineDataSource medicineDataSource) {
+         return new BootsPharmacyClient(
+                 rateLimitedRestClient,
+                 pharmacyChainDataSource::getPharmacyChainByPharmacyType,
+                 MedicineStockLevelByBootsStockLevelMapper::map,
+                 medicineDataSource::getBySourceIdAndPharmacyChainId
+         );
+     }
 
     @Bean("bootsPharmacyLocalClient")
     public PharmacyClient bootsPharmacyLocalClient() {

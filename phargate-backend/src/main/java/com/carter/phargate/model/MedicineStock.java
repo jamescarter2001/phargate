@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 @Builder
 public record MedicineStock(
         MedicineId medicineId,
-        PharmacyChainId pharmacyChainId,
-        @Nullable Long numericalLevel,
+        PharmacyId pharmacyId,
+        @Nullable Integer numericalLevel,
         MedicineStockLevel level
 ) {}

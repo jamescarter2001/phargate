@@ -3,6 +3,7 @@ package com.carter.phargate.pharmacy.boots;
 import com.carter.phargate.model.MedicineId;
 import com.carter.phargate.model.MedicineStock;
 import com.carter.phargate.model.Pharmacy;
+import com.carter.phargate.model.PharmacyId;
 import com.carter.phargate.pharmacy.PharmacyClient;
 import com.carter.phargate.util.FilesX;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -35,7 +36,7 @@ public class BootsPharmacyFileClient implements PharmacyClient {
     }
 
     @Override
-    public Map<MedicineId, List<MedicineStock>> getStockByPharmacyIdsAndMedicineIds(List<Long> pharmacyIds, List<Long> medicineIds) {
+    public Map<MedicineId, List<MedicineStock>> getStockByPharmaciesAndMedicines(List<PharmacyId> pharmacyIds, List<Long> medicineSourceIds) {
         return Collections.emptyMap();
     }
 }

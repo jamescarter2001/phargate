@@ -21,8 +21,8 @@ public class PharmacyIngestor implements Ingestor {
     @Override
     @Scheduled(cron = "0 0 0 * * *")
     public void ingest() {
-        log.info("Begin Ingestion");
+        log.info("Begin Pharmacy Ingestion");
         pharmacyClients.forEach(c -> pharmacyDataSource.saveAll(c.getPharmacies()));
-        log.info("End Ingestion");
+        log.info("End Pharmacy Ingestion");
     }
 }
